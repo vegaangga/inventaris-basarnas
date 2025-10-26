@@ -5,10 +5,10 @@
 
 @section('content')
     <div class="section-header">
-        <h1>Data Supplier</h1>
+        <h1>Data Kegiatan</h1>
         <div class="ml-auto">
             <a href="javascript:void(0)" class="btn btn-primary" id="button_tambah_supplier"><i class="fa fa-plus"></i>
-                Supplier</a>
+                Kegiatabn</a>
         </div>
     </div>
 
@@ -21,8 +21,8 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Perusahaan</th>
-                                    <th>Alamat</th>
+                                    <th>Nama Kegiatan</th>
+                                    <th>Keterangan</th>
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
@@ -40,7 +40,7 @@
             $('#table_id').DataTable();
 
             $.ajax({
-                url: "/supplier/get-data",
+                url: "/kegiatan/get-data",
                 type: "GET",
                 dataType: 'JSON',
                 success: function(response) {
@@ -88,7 +88,7 @@
             formData.append('_token', token);
 
             $.ajax({
-                url: '/supplier',
+                url: '/kegiatan',
                 type: "POST",
                 cache: false,
                 data: formData,
@@ -105,7 +105,7 @@
                     });
 
                     $.ajax({
-                        url: '/supplier/get-data',
+                        url: '/kegiatan/get-data',
                         type: "GET",
                         cache: false,
                         success: function(response) {
@@ -170,7 +170,7 @@
             let supplier_id = $(this).data('id');
 
             $.ajax({
-                url: `/supplier/${supplier_id}/edit`,
+                url: `/kegiatan/${supplier_id}/edit`,
                 type: "GET",
                 cache: false,
                 success: function(response) {
@@ -199,7 +199,7 @@
             formData.append('_method', 'PUT');
 
             $.ajax({
-                url: `/supplier/${supplier_id}`,
+                url: `/kegiatan/${supplier_id}`,
                 type: "POST",
                 cache: false,
                 data: formData,
@@ -260,7 +260,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: `/supplier/${supplier_id}`,
+                        url: `/kegiatan/${supplier_id}`,
                         type: "DELETE",
                         cache: false,
                         data: {
@@ -277,7 +277,7 @@
                             $(`#index_${supplier_id}`).remove();
 
                             $.ajax({
-                                url: "/supplier/get-data",
+                                url: "/kegiatan/get-data",
                                 type: "GET",
                                 dataType: 'JSON',
                                 success: function(response) {

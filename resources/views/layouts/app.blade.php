@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Inventory Gudang</title>
+  <title>Inventory Gudang Basarnas</title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
@@ -97,8 +97,8 @@
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
 
-          <div class="sidebar-brand">
-            <a href="/">INVENTORY GUDANG</a>
+          <div class="sidebar-brand" >
+            <a href="/">INVENTORY GUDANG BASARNAS</a>
           </div>
 
           <ul class="sidebar-menu"> 
@@ -134,13 +134,15 @@
                     <li><a class="nav-link {{ Request::is('satuan-barang') ? 'active' : '' }}" href="/satuan-barang"><i class="fa fa-solid fa-circle fa-xs"></i> Satuan</a></li>
                   </ul>
                 </li>
-                <li class="dropdown">
-                  <a href="#" class="nav-link has-dropdown {{ Request::is('supplier')  || Request::is('customer') ? 'active' : '' }}" data-toggle="dropdown"><i class="fa fa-sharp fa-solid fa-building"></i><span>Perusahaan</span></a>
+
+                <li><a class="nav-link {{ Request::is('kegiatan') ? 'active' : '' }}" href="/kegiatan"><i class="fa fa-solid fa-clock"></i><span>Kegiatan</span></a></li>
+                <!-- <li class="dropdown">
+                  <a href="#" class="nav-link has-dropdown {{ Request::is('supplier')  || Request::is('customer') ? 'active' : '' }}" data-toggle="dropdown"><i class="fa fa-sharp fa-solid fa-building"></i><span>Kegiatan</span></a>
                   <ul class="dropdown-menu">
-                    <li><a class="nav-link {{ Request::is('supplier') ? 'active' : '' }}" href="/supplier"><i class="fa fa-solid fa-circle fa-xs"></i> Supplier</a></li>
+                    <li><a class="nav-link {{ Request::is('supplier') ? 'active' : '' }}" href="/kegiatan"><i class="fa fa-solid fa-circle fa-xs"></i> Supplier</a></li>
                     <li><a class="nav-link {{ Request::is('customer') ? 'active' : '' }}" href="/customer"><i class="fa fa-solid fa-circle fa-xs"></i> Customer</a></li>
                   </ul>
-                </li>
+                </li> -->
 
               <li class="menu-header">TRANSAKSI</li>
               <li><a class="nav-link {{ Request::is('barang-masuk') ? 'active' : '' }}" href="barang-masuk"><i class="fa fa-solid fa-arrow-right"></i><span>Barang Masuk</span></a></li>
@@ -177,7 +179,7 @@
               <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown {{ Request::is('supplier')  || Request::is('customer') ? 'active' : '' }}" data-toggle="dropdown"><i class="fa fa-sharp fa-solid fa-building"></i><span>Perusahaan</span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link {{ Request::is('supplier') ? 'active' : '' }}" href="/supplier"><i class="fa fa-solid fa-circle fa-xs"></i> Supplier</a></li>
+                  <li><a class="nav-link {{ Request::is('supplier') ? 'active' : '' }}" href="/kegiatan"><i class="fa fa-solid fa-circle fa-xs"></i> Supplier</a></li>
                   <li><a class="nav-link {{ Request::is('customer') ? 'active' : '' }}" href="/customer"><i class="fa fa-solid fa-circle fa-xs"></i> Customer</a></li>
                 </ul>
               </li>

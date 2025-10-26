@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Tambah Supplier</h5>
+          <h5 class="modal-title">Tambah Kegiatan</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -11,12 +11,12 @@
           <div class="modal-body">
 
             <div class="form-group">
-                <label>Nama Perusahaan</label>
+                <label>Nama Kegiatan</label>
                 <input type="text" class="form-control" name="supplier" id="supplier">
                 <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-supplier"></div>
             </div>
             <div class="form-group">
-                <label>Alamat</label>
+                <label>Keterangan</label>
                 <textarea class="form-control" name="alamat" id="alamat" rows="3"></textarea>
                 <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-alamat"></div>
             </div>
