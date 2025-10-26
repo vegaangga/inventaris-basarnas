@@ -53,12 +53,14 @@ class BarangMasukController extends Controller
             'tanggal_masuk'     => 'required',
             'nama_barang'       => 'required',
             'jumlah_masuk'      => 'required',
-            'supplier_id'       => 'required'
+            'supplier_id'       => 'required',
+            'keterangan'        => 'required'
         ],[
             'tanggal_masuk.required'    => 'Pilih Barang Terlebih Dahulu !',
             'nama_barang.required'      => 'Form Nama Barang Wajib Di Isi !',
             'jumlah_masuk.required'     => 'Form Jumlah Stok Masuk Wajib Di Isi !',
-            'supplier_id.required'      => 'Pilih Supplier !'
+            'supplier_id.required'      => 'Pilih Supplier !',
+            'keterangan.required'       => 'Form Keterangan Wajib Di Isi !'
         ]);
 
 
@@ -72,7 +74,8 @@ class BarangMasukController extends Controller
             'jumlah_masuk'      => $request->jumlah_masuk,
             'supplier_id'       => $request->supplier_id,
             'kode_transaksi'    => $request->kode_transaksi,
-            'user_id'           => auth()->user()->id
+            'user_id'           => auth()->user()->id,
+            'keterangan'        => $request->keterangan
         ]); 
 
         if ($barangMasuk) {
@@ -150,6 +153,7 @@ class BarangMasukController extends Controller
                 'nama_barang'   => $barang->nama_barang,
                 'stok'          => $barang->stok,
                 'satuan_id'     => $barang->satuan_id,
+                'keterangan'    => $barang->keterangan
             ]);
         }
     }

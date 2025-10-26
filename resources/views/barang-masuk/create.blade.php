@@ -68,6 +68,14 @@
                   </div>
                 </div>
 
+                <div class="form-group">
+                  <label>Keterangan</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="keterangan" id="keterangan" min="0" style="width: 75%;">
+                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-keterangan"></div>
+                  </div>
+                </div>
+
               </div>
             </div>            
           </div>

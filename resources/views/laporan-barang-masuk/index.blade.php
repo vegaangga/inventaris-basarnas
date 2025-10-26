@@ -45,6 +45,7 @@
                                 <th>Nama Barang</th>
                                 <th>Jumlah Masuk</th>
                                 <th>Supplier</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
                         <tbody id="tabel-laporan-barang-masuk">
@@ -112,7 +113,7 @@
         });
 
         function getSupplierName(supplierId, callback) {
-            $.getJSON('{{ url('api/supplier') }}', function(suppliers) {
+            $.getJSON('{{ url('api/kegiatan') }}', function(suppliers) {
                 var supplier = suppliers.find(function(s) {
                     return s.id === supplierId;
                 });

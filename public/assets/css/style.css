@@ -2585,7 +2585,7 @@ body.layout-3 .main-footer {
   .main-sidebar .sidebar-brand a {
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: normal;
     font-weight: 700;
     color: #000; }
 .main-sidebar .sidebar-user {

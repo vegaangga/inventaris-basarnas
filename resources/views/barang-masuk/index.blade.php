@@ -25,7 +25,8 @@
                                     <th>Tanggal Masuk</th>
                                     <th>Nama Barang</th>
                                     <th>Stok Masuk</th>
-                                    <th>Supplier</th>
+                                    <th>Kegiatan</th>
+                                    <th>Keterangan</th>
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
@@ -106,6 +107,7 @@
                     <td>${value.nama_barang}</td>
                     <td>${value.jumlah_masuk}</td>
                     <td>${supplier}</td>
+                    <td>${value.keterangan}</td>
                     <td>
                         <a href="javascript:void(0)" id="button_hapus_barangMasuk" data-id="${value.id}" class="btn btn-icon btn-danger btn-lg mb-2"><i class="fas fa-trash"></i> </a>
                     </td>
@@ -154,6 +156,7 @@
             let nama_barang = $('#nama_barang').val();
             let jumlah_masuk = $('#jumlah_masuk').val();
             let supplier_id = $('#supplier_id').val();
+            let keterangan = $('#keterangan').val();
             let token = $("meta[name='csrf-token']").attr("content");
 
             let formData = new FormData();
@@ -162,6 +165,7 @@
             formData.append('nama_barang', nama_barang);
             formData.append('jumlah_masuk', jumlah_masuk);
             formData.append('supplier_id', supplier_id);
+            formData.append('keterangan', keterangan);
             formData.append('_token', token);
 
             $.ajax({
@@ -201,6 +205,7 @@
                                     <td>${value.nama_barang}</td>
                                     <td>${value.jumlah_masuk}</td>
                                     <td>${supplier}</td>
+                                     <td>${value.keterangan}</td>
                                     <td>
                                         <a href="javascript:void(0)" id="button_hapus_barangMasuk" data-id="${value.id}" class="btn btn-icon btn-danger btn-lg mb-2"><i class="fas fa-trash"></i> </a>
                                     </td>
@@ -214,6 +219,7 @@
                             $('#nama_barang').val('');
                             $('#jumlah_masuk').val('');
                             $('#stok').val('');
+                            $('#keterangan').val('');
 
                             $('#modal_tambah_barangMasuk').modal('hide');
 
@@ -270,6 +276,14 @@
                         $('#alert-supplier_id').addClass('d-block');
 
                         $('#alert-supplier_id').html(error.responseJSON.supplier_id[0]);
+                    }
+
+                    if (error.responseJSON && error.responseJSON.keterangan && error.responseJSON
+                        .keterangan[0]) {
+                        $('#alert-keterangan').removeClass('d-none');
+                        $('#alert-keterangan').addClass('d-block');
+
+                        $('#alert-keterangan').html(error.responseJSON.keterangan[0]);
                     }
                 }
             });
@@ -328,6 +342,7 @@
                                             <td>${value.nama_barang}</td>
                                             <td>${value.jumlah_masuk}</td>
                                             <td>${supplier}</td>
+                                            <td>${value.keterangan}</td>
                                             <td>
                                                 <a href="javascript:void(0)" id="button_hapus_barangMasuk" data-id="${value.id}" class="btn btn-icon btn-danger btn-lg mb-2"><i class="fas fa-trash"></i> </a>
                                             </td>
