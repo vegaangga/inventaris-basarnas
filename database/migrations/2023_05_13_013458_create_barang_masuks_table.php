@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_barang');
             $table->integer('jumlah_masuk');
             $table->foreignId('supplier_id');
+            $table->foreignId('keterangan');
             $table->foreignId('user_id');
             $table->timestamps();
         });
