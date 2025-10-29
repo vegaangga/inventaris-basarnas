@@ -48,11 +48,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Jenis::create([
-            'jenis_barang'  => 'pupuk cair',
+            'jenis_barang'  => 'Life Jacket',
             'user_id'       => 1
         ]);
         Jenis::create([
-            'jenis_barang'  => 'pupuk Kimia',
+            'jenis_barang'  => 'Ring Buoy',
             'user_id'       => 1
         ]);
 
