@@ -13,6 +13,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HakAksesController;
+use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LaporanBarangKeluarController;
 use App\Http\Controllers\LaporanBarangMasukController;
 use App\Http\Controllers\LaporanStokController;
@@ -83,8 +84,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/satuan-barang/get-data', [SatuanController::class, 'getDataSatuanBarang']);
         Route::resource('/satuan-barang', SatuanController::class);
     
-        Route::get('/supplier/get-data', [SupplierController::class, 'getDataSupplier']);
-        Route::resource('/supplier', SupplierController::class);
+        // Route::get('/kegiatan/get-data', [SupplierController::class, 'getDataSupplier']);
+        // Route::resource('/kegiatan', SupplierController::class);
+
+        Route::get('/kegiatan/get-data', [KegiatanController::class, 'getDataKegiatan']);
+        Route::resource('/kegiatan', KegiatanController::class);
     
         Route::get('/customer/get-data', [CustomerController::class, 'getDataCustomer']);
         Route::resource('/customer', CustomerController::class);

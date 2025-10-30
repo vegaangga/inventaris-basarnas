@@ -12,12 +12,12 @@
 
             <div class="form-group">
                 <label>Nama Kegiatan</label>
-                <input type="text" class="form-control" name="supplier" id="supplier">
+                <input type="text" class="form-control" name="kegiatan" id="kegiatan">
                 <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-supplier"></div>
             </div>
             <div class="form-group">
                 <label>Keterangan</label>
-                <textarea class="form-control" name="alamat" id="alamat" rows="3"></textarea>
+                <textarea class="form-control" name="keterangan" id="keterangan" rows="3"></textarea>
                 <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-alamat"></div>
             </div>
 
@@ -30,7 +30,5 @@
       </div>
     </div>
   </div>
-</div>
-
 
 
