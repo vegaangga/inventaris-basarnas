@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Supplier;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Kegiatan;
 use Illuminate\Support\Facades\Validator;
 
 class SupplierController extends Controller
@@ -15,7 +15,7 @@ class SupplierController extends Controller
     public function index()
     {
         return view('supplier.index', [
-            'suppliers' => Supplier::all()
+            'suppliers' => Kegiatan::all()
         ]);
     }
 
@@ -23,7 +23,7 @@ class SupplierController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data'    => Supplier::all()
+            'data'    => Kegiatan::all()
         ]);
     }
 
@@ -41,20 +41,20 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'supplier'  => 'required',
-            'alamat'    => 'required'
+            'kegiatan'  => 'required',
+            'keterangan'    => 'required'
         ],[
-            'supplier.required' => 'Form Nama Perusahaan Wajib Di Isi !',
-            'alamat.required'   => 'Form Alamat Wajib Diisi'
+            'kegiatan.required' => 'Form Nama Perusahaan Wajib Di Isi !',
+            'keterangan.required'   => 'Form Alamat Wajib Diisi'
         ]);
 
         if($validator->fails()){
             return response()->json($validator->errors(), 422);
         }
 
-        $supplier = Supplier::create([
-            'supplier'  => $request->supplier,
-            'alamat'    => $request->alamat,
+        $supplier = Kegiatan::create([
+            'kegiatan'  => $request->supplier,
+            'keterangan'    => $request->alamat,
             'user_id'   => auth()->user()->id
         ]);
 
@@ -68,7 +68,7 @@ class SupplierController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Supplier $supplier)
+    public function show(Kegiatan $supplier)
     {
         //
     }
@@ -76,7 +76,7 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Supplier $supplier)
+    public function edit(Kegiatan $supplier)
     {
         return response()->json([
             'success' => true,
@@ -88,14 +88,14 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, Kegiatan $supplier)
     {
         $validator = Validator::make($request->all(), [
-            'supplier'  => 'required',
-            'alamat'    => 'required'
+            'kegiatan'  => 'required',
+            'keterangan'    => 'required'
         ],[
-            'supplier.required' => 'Form Nama Perusahaan Wajib Di Isi !',
-            'alamat.required'   => 'Form Alamat Wajib Diisi'
+            'kegiatan.required' => 'Form Nama Perusahaan Wajib Di Isi !',
+            'keterangan.required'   => 'Form Alamat Wajib Diisi'
         ]);
 
         if($validator->fails()){
@@ -103,8 +103,8 @@ class SupplierController extends Controller
         }
 
         $supplier->update([
-            'supplier'  => $request->supplier,
-            'alamat'    => $request->alamat,
+            'kegiatan'  => $request->supplier,
+            'keterangan'    => $request->alamat,
             'user_id'   => auth()->user()->id
         ]);
 
@@ -118,9 +118,9 @@ class SupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Supplier $supplier)
+    public function destroy(Kegiatan $supplier)
     {
-        Supplier::destroy($supplier->id);
+        Kegiatan::destroy($supplier->id);
         
         return response()->json([
             'success' => true,

@@ -167,14 +167,14 @@
     <script>
         //Show modal edit
         $('body').on('click', '#button_edit_supplier', function() {
-            let supplier_id = $(this).data('id');
+            let kegiatan_id = $(this).data('id');
 
             $.ajax({
-                url: `/kegiatan/${supplier_id}/edit`,
+                url: `/kegiatan/${kegiatan_id}/edit`,
                 type: "GET",
                 cache: false,
                 success: function(response) {
-                    $('#supplier_id').val(response.data.id);
+                    $('#kegiatan_id').val(response.data.id);
                     $('#edit_supplier').val(response.data.supplier);
                     $('#edit_alamat').val(response.data.alamat);
 
@@ -187,7 +187,7 @@
         $('#update').click(function(e) {
             e.preventDefault();
 
-            let supplier_id = $('#supplier_id').val();
+            let kegiatan_id = $('#kegiatan_id').val();
             let supplier = $('#edit_supplier').val();
             let alamat = $('#edit_alamat').val();
             let token = $("meta[name='csrf-token']").attr('content');
@@ -199,7 +199,7 @@
             formData.append('_method', 'PUT');
 
             $.ajax({
-                url: `/kegiatan/${supplier_id}`,
+                url: `/kegiatan/${kegiatan_id}`,
                 type: "POST",
                 cache: false,
                 data: formData,
@@ -247,7 +247,7 @@
     <!-- Hapus Data Barang -->
     <script>
         $('body').on('click', '#button_hapus_supplier', function() {
-            let supplier_id = $(this).data('id');
+            let kegiatan_id = $(this).data('id');
             let token = $("meta[name='csrf-token']").attr("content");
 
             Swal.fire({
@@ -260,7 +260,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: `/kegiatan/${supplier_id}`,
+                        url: `/kegiatan/${kegiatan_id}`,
                         type: "DELETE",
                         cache: false,
                         data: {
@@ -274,7 +274,7 @@
                                 showConfirmButton: true,
                                 timer: 3000
                             });
-                            $(`#index_${supplier_id}`).remove();
+                            $(`#index_${kegiatan_id}`).remove();
 
                             $.ajax({
                                 url: "/kegiatan/get-data",
