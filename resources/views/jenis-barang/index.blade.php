@@ -21,7 +21,12 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Jenis Barang</th>
+                                    <th>Nama Jenis Barang</th>
+                                    <!-- <th>Bagian Utama</th>
+                                    <th>Safety Procedure</th>
+                                    <th>Operasional Procedure</th>
+                                    <th>Troublesooting Ringan</th>
+                                    <th>Procedure Penyimpanan</th> -->
                                     <th>Opsi</th>
                                 </tr>
                             </thead>

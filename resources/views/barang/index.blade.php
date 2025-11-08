@@ -26,6 +26,7 @@
                                     <th>Kode Barang</th>
                                     <th>Nama Barang</th>
                                     <th>Stok</th>
+                                    <th>Detail Item</th>
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
@@ -61,6 +62,7 @@
                     <td>${value.kode_barang}</td>
                     <td>${value.nama_barang}</td>
                     <td>${stok}</td>
+                    <td><a href="#">Lihat detail</a></td>
                     <td>
                         <a href="javascript:void(0)" id="button_detail_barang" data-id="${value.id}" class="btn btn-icon btn-success btn-lg mb-2"><i class="far fa-eye"></i> </a>
                         <a href="javascript:void(0)" id="button_edit_barang" data-id="${value.id}" class="btn btn-icon btn-warning btn-lg mb-2"><i class="far fa-edit"></i> </a>
@@ -137,6 +139,7 @@
                                 <td>${value.kode_barang}</td>
                                 <td>${value.nama_barang}</td>
                                 <td>${stok}</td>
+                                <td><a href="#">Lihat detail</a></td>
                                 <td>
                                     <a href="javascript:void(0)" id="button_detail_barang" data-id="${value.id}" class="btn btn-icon btn-success btn-lg mb-2"><i class="far fa-eye"></i> </a>
                                     <a href="javascript:void(0)" id="button_edit_barang" data-id="${value.id}" class="btn btn-icon btn-warning btn-lg mb-2"><i class="far fa-edit"></i> </a>
@@ -440,6 +443,7 @@
                                             <td>${value.kode_barang}</td>
                                             <td>${value.nama_barang}</td>
                                             <td>${stok}</td>
+                                            <td><a href="#">Lihat detail</a></td>
                                             <td>
                                                 <a href="javascript:void(0)" id="button_detail_barang" data-id="${value.id}" class="btn btn-icon btn-success btn-lg mb-2"><i class="far fa-eye"></i> </a>
                                                 <a href="javascript:void(0)" id="button_edit_barang" data-id="${value.id}" class="btn btn-icon btn-warning btn-lg mb-2"><i class="far fa-edit"></i> </a>
