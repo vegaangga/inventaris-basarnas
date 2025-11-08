@@ -98,7 +98,7 @@
                     let counter = 1;
                     $('#table_id').DataTable().clear();
                     $.each(response.data, function(key, value) {
-                        let supplier = getSupplierName(response.supplier, value.supplier_id);
+                        let kegiatan = getKegiatanName(response.kegiatan, value.kegiatan_id);
                         let barangMasuk = `
                 <tr class="barang-row" id="index_${value.id}">
                     <td>${counter++}</td>   
@@ -106,7 +106,7 @@
                     <td>${value.tanggal_masuk}</td>
                     <td>${value.nama_barang}</td>
                     <td>${value.jumlah_masuk}</td>
-                    <td>${supplier}</td>
+                    <td>${kegiatan}</td>
                     <td>${value.keterangan}</td>
                     <td>
                         <a href="javascript:void(0)" id="button_hapus_barangMasuk" data-id="${value.id}" class="btn btn-icon btn-danger btn-lg mb-2"><i class="fas fa-trash"></i> </a>
@@ -116,9 +116,9 @@
                         $('#table_id').DataTable().row.add($(barangMasuk)).draw(false);
                     });
 
-                    function getSupplierName(suppliers, supplierId) {
-                        let supplier = suppliers.find(s => s.id === supplierId);
-                        return supplier ? supplier.supplier : '';
+                    function getKegiatanName(kegiatans, kegiatanId) {
+                        let kegiatan = kegiatans.find(s => s.id === kegiatanId);
+                        return kegiatan ? kegiatan.kegiatan : '';
                     }
                 }
             });
@@ -155,7 +155,7 @@
             let tanggal_masuk = $('#tanggal_masuk').val();
             let nama_barang = $('#nama_barang').val();
             let jumlah_masuk = $('#jumlah_masuk').val();
-            let supplier_id = $('#supplier_id').val();
+            let kegiatan_id = $('#kegiatan_id').val();
             let keterangan = $('#keterangan').val();
             let token = $("meta[name='csrf-token']").attr("content");
 
@@ -164,7 +164,7 @@
             formData.append('tanggal_masuk', tanggal_masuk);
             formData.append('nama_barang', nama_barang);
             formData.append('jumlah_masuk', jumlah_masuk);
-            formData.append('supplier_id', supplier_id);
+            formData.append('kegiatan_id', kegiatan_id);
             formData.append('keterangan', keterangan);
             formData.append('_token', token);
 
@@ -195,8 +195,8 @@
                             let counter = 1;
                             $('#table_id').DataTable().clear();
                             $.each(response.data, function(key, value) {
-                                let supplier = getSupplierName(response.supplier,
-                                    value.supplier_id);
+                                let kegiatan = getKegiatanName(response.kegiatan,
+                                    value.kegiatan_id);
                                 let barangMasuk = `
                                 <tr class="barang-row" id="index_${value.id}">
                                     <td>${counter++}</td>   
@@ -204,7 +204,7 @@
                                     <td>${value.tanggal_masuk}</td>
                                     <td>${value.nama_barang}</td>
                                     <td>${value.jumlah_masuk}</td>
-                                    <td>${supplier}</td>
+                                    <td>${kegiatan}</td>
                                      <td>${value.keterangan}</td>
                                     <td>
                                         <a href="javascript:void(0)" id="button_hapus_barangMasuk" data-id="${value.id}" class="btn btn-icon btn-danger btn-lg mb-2"><i class="fas fa-trash"></i> </a>
@@ -226,9 +226,9 @@
                             let table = $('#table_id').DataTable();
                             table.draw(); // memperbarui Datatables
 
-                            function getSupplierName(suppliers, supplierId) {
-                                let supplier = suppliers.find(s => s.id === supplierId);
-                                return supplier ? supplier.supplier : '';
+                            function getKegiatanName(kegiatans, kegiatanId) {
+                                let kegiatan = kegiatans.find(s => s.id === kegiatanId);
+                                return kegiatan ? kegiatan.kegiatan : '';
                             }
                         },
                         error: function(error) {
@@ -270,12 +270,12 @@
                         $('#alert-jumlah_masuk').html(error.responseJSON.jumlah_masuk[0]);
                     }
 
-                    if (error.responseJSON && error.responseJSON.supplier_id && error.responseJSON
-                        .supplier_id[0]) {
-                        $('#alert-supplier_id').removeClass('d-none');
-                        $('#alert-supplier_id').addClass('d-block');
+                    if (error.responseJSON && error.responseJSON.kegiatan_id && error.responseJSON
+                        .kegiatan_id[0]) {
+                        $('#alert-kegiatan_id').removeClass('d-none');
+                        $('#alert-kegiatan_id').addClass('d-block');
 
-                        $('#alert-supplier_id').html(error.responseJSON.supplier_id[0]);
+                        $('#alert-kegiatan_id').html(error.responseJSON.kegiatan_id[0]);
                     }
 
                     if (error.responseJSON && error.responseJSON.keterangan && error.responseJSON
@@ -331,9 +331,9 @@
                                     let counter = 1;
                                     $('#table_id').DataTable().clear();
                                     $.each(response.data, function(key, value) {
-                                        let supplier = getSupplierName(
-                                            response.supplier, value
-                                            .supplier_id);
+                                        let kegiatan = getKegiatanName(
+                                            response.kegiatan, value
+                                            .kegiatan_id);
                                         let barangMasuk = `
                                         <tr class="barang-row" id="index_${value.id}">
                                             <td>${counter++}</td>   
@@ -341,7 +341,7 @@
                                             <td>${value.tanggal_masuk}</td>
                                             <td>${value.nama_barang}</td>
                                             <td>${value.jumlah_masuk}</td>
-                                            <td>${supplier}</td>
+                                            <td>${kegiatan}</td>
                                             <td>${value.keterangan}</td>
                                             <td>
                                                 <a href="javascript:void(0)" id="button_hapus_barangMasuk" data-id="${value.id}" class="btn btn-icon btn-danger btn-lg mb-2"><i class="fas fa-trash"></i> </a>
@@ -352,11 +352,11 @@
                                             $(barangMasuk)).draw(false);
                                     });
 
-                                    function getSupplierName(suppliers,
-                                    supplierId) {
-                                        let supplier = suppliers.find(s => s.id ===
-                                            supplierId);
-                                        return supplier ? supplier.supplier : '';
+                                    function getKegiatanName(kegiatans,
+                                    kegiatanId) {
+                                        let kegiatan = kegiatans.find(s => s.id ===
+                                            kegiatanId);
+                                        return kegiatan ? kegiatan.kegiatan : '';
                                     }
                                 }
                             });

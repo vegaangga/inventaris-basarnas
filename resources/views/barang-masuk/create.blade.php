@@ -44,17 +44,17 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Supplier</label>
-                  <select class="form-control" name="supplier_id" id="supplier_id">
-                    @foreach ($suppliers as $supplier)
-                        @if (old('supplier_id') == $supplier->id)
-                          <option value="{{ $supplier->id }}" selected>{{ $supplier->supplier}}</option>
+                  <label>Kegiatan</label>
+                  <select class="form-control" name="kegiatan_id" id="kegiatan_id">
+                    @foreach ($kegiatans as $kegiatan)
+                        @if (old('kegiatan_id') == $kegiatan->id)
+                          <option value="{{ $kegiatan->id }}" selected>{{ $kegiatan->kegiatan}}</option>
                         @else
-                          <option value="{{ $supplier->id }}">{{ $supplier->supplier}}</option>
+                          <option value="{{ $kegiatan->id }}">{{ $kegiatan->kegiatan}}</option>
                         @endif
                     @endforeach
                   </select>
-                  <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-supplier_id"></div>
+                  <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-kegiatan_id"></div>
                 </div>
     
                 <div class="form-group">

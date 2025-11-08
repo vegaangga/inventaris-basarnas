@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use App\Models\Satuan;
-use App\Models\Supplier;
+use App\Models\Kegiatan;
 use App\Models\BarangMasuk;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,7 +21,7 @@ class BarangMasukController extends Controller
         return view('barang-masuk.index', [
             'barangs'      => Barang::all(),
             'barangsMasuk' => BarangMasuk::all(),
-            'suppliers'    => Supplier::all()
+            'kegiatans'    => Kegiatan::all()
         ]);
     }
 
@@ -30,7 +30,7 @@ class BarangMasukController extends Controller
         return response()->json([
             'success'   => true,
             'data'      => BarangMasuk::all(),
-            'supplier'  => Supplier::all()
+            'kegiatan'  => Kegiatan::all()
         ]);
     }
 
@@ -53,13 +53,13 @@ class BarangMasukController extends Controller
             'tanggal_masuk'     => 'required',
             'nama_barang'       => 'required',
             'jumlah_masuk'      => 'required',
-            'supplier_id'       => 'required',
+            'kegiatan_id'       => 'required',
             'keterangan'        => 'required'
         ],[
             'tanggal_masuk.required'    => 'Pilih Barang Terlebih Dahulu !',
             'nama_barang.required'      => 'Form Nama Barang Wajib Di Isi !',
             'jumlah_masuk.required'     => 'Form Jumlah Stok Masuk Wajib Di Isi !',
-            'supplier_id.required'      => 'Pilih Supplier !',
+            'kegiatan_id.required'      => 'Pilih Kegiatan !',
             'keterangan.required'       => 'Form Keterangan Wajib Di Isi !'
         ]);
 
@@ -72,7 +72,7 @@ class BarangMasukController extends Controller
             'tanggal_masuk'     => $request->tanggal_masuk,
             'nama_barang'       => $request->nama_barang,
             'jumlah_masuk'      => $request->jumlah_masuk,
-            'supplier_id'       => $request->supplier_id,
+            'kegiatan_id'       => $request->kegiatan_id,
             'kode_transaksi'    => $request->kode_transaksi,
             'user_id'           => auth()->user()->id,
             'keterangan'        => $request->keterangan
