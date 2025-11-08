@@ -35,4 +35,10 @@ class Kegiatan extends Model
     {
         return $this->hasMany(BarangMasuk::class);
     }
+
+    // 1 Kegiatan memiliki banyak barangMasuk
+    public function BarangKeluars()
+    {
+        return $this->hasMany(BarangKeluar::class);
+    }
 }

@@ -14,8 +14,8 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        return view('supplier.index', [
-            'kegiatans' => Kegiatan::all(),
+        return view('kegiatan.index', [
+            'kegiatans' => Kegiatan::all()
         ]);
     }
 
@@ -23,7 +23,7 @@ class KegiatanController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data'    => Kegiatan::all(),
+            'data'    => Kegiatan::all()
         ]);
     }
 
@@ -32,7 +32,7 @@ class KegiatanController extends Controller
      */
     public function create()
     {
-        return view('supplier.create');
+        return view('kegiatan.create');
     }
 
     /**
@@ -41,27 +41,27 @@ class KegiatanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'kegiatan'   => 'required|string|max:255',
-            'keterangan' => 'required|string',
+            'kegiatan'  => 'required',
+            'keterangan'    => 'required'
         ],[
-            'kegiatan.required'   => 'Form Nama Kegiatan wajib diisi!',
-            'keterangan.required' => 'Form Keterangan wajib diisi!',
+            'kegiatan.required' => 'Form Nama Perusahaan Wajib Di Isi !',
+            'keterangan.required'   => 'Form Alamat Wajib Diisi'
         ]);
 
-        if ($validator->fails()) {
+        if($validator->fails()){
             return response()->json($validator->errors(), 422);
         }
 
         $kegiatan = Kegiatan::create([
-            'kegiatan'   => $request->kegiatan,
-            'keterangan' => $request->keterangan,
-            'user_id'    => auth()->id(),
+            'kegiatan'  => $request->kegiatan,
+            'keterangan'    => $request->keterangan,
+            'user_id'   => auth()->user()->id
         ]);
 
         return response()->json([
-            'success' => true,
-            'message' => 'Data berhasil disimpan!',
-            'data'    => $kegiatan,
+            'success'   => true,
+            'message'   => 'Data Berhasil Disimpan !',
+            'data'      => $kegiatan
         ]);
     }
 
@@ -70,10 +70,7 @@ class KegiatanController extends Controller
      */
     public function show(Kegiatan $kegiatan)
     {
-        return response()->json([
-            'success' => true,
-            'data'    => $kegiatan,
-        ]);
+        //
     }
 
     /**
@@ -83,8 +80,8 @@ class KegiatanController extends Controller
     {
         return response()->json([
             'success' => true,
-            'message' => 'Edit data kegiatan',
-            'data'    => $kegiatan,
+            'message' => 'Edit Data Barang',
+            'data'    => $kegiatan
         ]);
     }
 
@@ -94,27 +91,27 @@ class KegiatanController extends Controller
     public function update(Request $request, Kegiatan $kegiatan)
     {
         $validator = Validator::make($request->all(), [
-            'kegiatan'   => 'required|string|max:255',
-            'keterangan' => 'required|string',
+            'kegiatan'  => 'required',
+            'keterangan'    => 'required'
         ],[
-            'kegiatan.required'   => 'Form Nama Kegiatan wajib diisi!',
-            'keterangan.required' => 'Form Keterangan wajib diisi!',
+            'kegiatan.required' => 'Form Nama Perusahaan Wajib Di Isi !',
+            'keterangan.required'   => 'Form Alamat Wajib Diisi'
         ]);
 
-        if ($validator->fails()) {
+        if($validator->fails()){
             return response()->json($validator->errors(), 422);
         }
 
         $kegiatan->update([
-            'kegiatan'   => $request->kegiatan,
-            'keterangan' => $request->keterangan,
-            'user_id'    => auth()->id(),
+            'kegiatan'  => $request->kegiatan,
+            'keterangan'    => $request->keterangan,
+            'user_id'   => auth()->user()->id
         ]);
 
         return response()->json([
-            'success' => true,
-            'message' => 'Data berhasil terupdate!',
-            'data'    => $kegiatan,
+            'success'   => true,
+            'message'   => 'Data Berhasil Terupdate',
+            'data'      => $kegiatan
         ]);
     }
 
@@ -123,11 +120,11 @@ class KegiatanController extends Controller
      */
     public function destroy(Kegiatan $kegiatan)
     {
-        $kegiatan->delete();
-
+        Kegiatan::destroy($kegiatan->id);
+        
         return response()->json([
             'success' => true,
-            'message' => 'Data berhasil dihapus!',
+            'message' => 'Data Berhasil Dihapus'
         ]);
     }
 }
