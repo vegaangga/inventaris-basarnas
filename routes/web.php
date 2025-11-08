@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\ArticleController;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JenisController;
@@ -33,9 +34,18 @@ use App\Models\BarangMasuk;
 |
 */
 
+// Route::get('/welcome', function () {
+//     // return view('home.landing', compact('suppliers'));
+//     return view('home.landing');
+// });
+Route::get('/beranda', [ArticleController::class,'index'])->name('article.index');
+Route::get('/article', [ArticleController::class,'list'])->name('article.list');
+Route::get('/article/{article:slug}', [ArticleController::class,'show'])->name('article.show');
 
 Route::middleware('auth')->group(function () {
 
+    // Manage Article
+    
     Route::group(['middleware' => 'checkRole:superadmin'], function(){
         Route::get('/data-pengguna/get-data', [ManajemenUserController::class, 'getDataPengguna']);
         Route::get('/api/role/', [ManajemenUserController::class, 'getRole']);
