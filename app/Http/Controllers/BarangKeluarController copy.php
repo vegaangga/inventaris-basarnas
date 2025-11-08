@@ -8,6 +8,7 @@ use App\Models\Kegiatan;
 use App\Models\BarangKeluar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Validator;
 
 class BarangKeluarController extends Controller
@@ -18,9 +19,9 @@ class BarangKeluarController extends Controller
     public function index()
     {
         return view('barang-keluar.index', [
-            'barangs'           => Barang::all(),
-            'barangKeluar'      => BarangKeluar::all(),
-            'kegiatans'         => Kegiatan::all()
+            'barangs'      => Barang::all(),
+            'barangsKeluar' => BarangKeluar::all(),
+            'kegiatans'    => Kegiatan::all()
         ]);
     }
 
@@ -33,14 +34,13 @@ class BarangKeluarController extends Controller
         ]);
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
         return view('barang-keluar.create', [
-            'barangs' => Barang::all()
+            'barangs'   => Barang::all()
         ]);
     }
 
@@ -51,47 +51,37 @@ class BarangKeluarController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tanggal_keluar'     => 'required',
-            'nama_barang'        => 'required',
-            'kegiatan_id'        => 'required',
-            'keterangan'         => 'required',
-            'jumlah_keluar'      => [
-                'required',
-                function ($attribute, $value, $fail) use ($request) {
-                    $nama_barang = $request->nama_barang;
-                    $barang = Barang::where('nama_barang', $nama_barang)->first();
-        
-                    if ($value > $barang->stok) {
-                        $fail("Stok Tidak Cukup !");
-                    }
-                },
-            ],
+            'nama_barang'       => 'required',
+            'jumlah_keluar'      => 'required',
+            'kegiatan_id'       => 'required',
+            'keterangan'        => 'required'
         ],[
             'tanggal_keluar.required'    => 'Pilih Barang Terlebih Dahulu !',
-            'nama_barang.required'       => 'Form Nama Barang Wajib Di Isi !',
-            'jumlah_keluar.required'     => 'Form Jumlah Stok Masuk Wajib Di Isi !',
-            'kegiatan_id.required'       => 'Pilih Kegiatan !',
-            'keterangan.required'       => 'Isi keterangan !'
+            'nama_barang.required'      => 'Form Nama Barang Wajib Di Isi !',
+            'jumlah_keluar.required'     => 'Form Jumlah Stok Keluar Wajib Di Isi !',
+            'kegiatan_id.required'      => 'Pilih Kegiatan !',
+            'keterangan.required'       => 'Form Keterangan Wajib Di Isi !'
         ]);
+
 
         if($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-
         $barangKeluar = BarangKeluar::create([
-            'tanggal_keluar'    => $request->tanggal_keluar,
+            'tanggal_keluar'     => $request->tanggal_keluar,
             'nama_barang'       => $request->nama_barang,
-            'jumlah_keluar'     => $request->jumlah_keluar,
+            'jumlah_keluar'      => $request->jumlah_keluar,
             'kegiatan_id'       => $request->kegiatan_id,
             'kode_transaksi'    => $request->kode_transaksi,
-            'keterangan' => $request->keterangan,
-            'user_id'           => auth()->user()->id
+            'user_id'           => auth()->user()->id,
+            'keterangan'        => $request->keterangan
         ]); 
 
         if ($barangKeluar) {
             $barang = Barang::where('nama_barang', $request->nama_barang)->first();
             if ($barang) {
-                $barang->stok -= $request->jumlah_keluar;
+                $barang->stok += $request->jumlah_keluar;
                 $barang->save();
             }
         }
@@ -140,67 +130,42 @@ class BarangKeluarController extends Controller
         $barangKeluar->delete();
 
         $barang = Barang::where('nama_barang', $barangKeluar->nama_barang)->first();
-        if($barang){
-            $barang->stok += $jumlahKeluar;
+        if ($barang) {
+            $barang->stok -= $jumlahKeluar;
             $barang->save();
         }
-
+        
         return response()->json([
             'success' => true,
-            'message' => 'Data Berhasil Dihapus!'
+            'message' => 'Data Barang Berhasil Dihapus!'
         ]);
     }
+
 
     /**
      * Create Autocomplete Data
      */
     public function getAutoCompleteData(Request $request)
     {
-        $barang = Barang::where('nama_barang', $request->nama_barang)->first();
-
+        $barang = Barang::where('nama_barang', $request->nama_barang)->first();;
         if($barang){
             return response()->json([
                 'nama_barang'   => $barang->nama_barang,
                 'stok'          => $barang->stok,
                 'satuan_id'     => $barang->satuan_id,
+                'keterangan'    => $barang->keterangan
             ]);
         }
     }
 
     /**
-     * Create Autocomplete Data In Update Method
+     * Get Satuan
      */
-
-    public function getStok(Request $request)
-    {
-        $namaBarang = $request->input('nama_barang');
-        $barang = Barang::where('nama_barang', $namaBarang)->select('stok', 'satuan_id')->first();
-
-        $response = [
-            'stok'          => $barang->stok,
-            'satuan_id'     => $barang->satuan_id
-        ];
-
-        return response()->json($response);
-    }
-
     public function getSatuan()
     {
-        $satuans = Satuan::all();
-        
-        return response()->json($satuans);
+       $satuans = Satuan::all();
+       
+       return response()->json($satuans);
     }
-
-    public function getBarangs(Request $request)
-    {
-        if ($request->has('q')) {
-            $barangs = Barang::where('nama_barang', 'like', '%' . $request->input('q') . '%')->get();
-            return response()->json($barangs);
-        }
-
-        return response()->json([]);
-    }
-
-
 
 }

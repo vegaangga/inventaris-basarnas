@@ -44,7 +44,7 @@
                                 <th>Tanggal Keluar</th>
                                 <th>Nama Barang</th>
                                 <th>Jumlah Masuk</th>
-                                <th>Customer</th>
+                                <th>Kegiatan</th>
                             </tr>
                         </thead>
                         <tbody id="tabel-laporan-barang-keluar">
@@ -90,14 +90,14 @@
 
                     if (response.length > 0) {
                         $.each(response, function(index, item) {
-                            getCustomerName(item.customer_id, function(customer){
+                            getKegiatanName(item.kegiatan_id, function(kegiatan){
                                 var row = [
                                     (index + 1),
                                     item.kode_transaksi,
                                     item.tanggal_keluar,
                                     item.nama_barang,
                                     item.jumlah_keluar,
-                                    customer
+                                    kegiatan
                                 ];
                                table.row.add(row).draw(false);
                             });
@@ -111,12 +111,12 @@
                     console.log(error);
                 }
             });
-            function getCustomerName(customerId, callback){
-                $.getJSON('{{ url('api/customer') }}', function(customers){
-                    var customer = customers.find(function(s){
-                        return s.id === customerId;
+            function getKegiatanName(kegiatanId, callback){
+                $.getJSON('{{ url('api/kegiatan') }}', function(kegiatans){
+                    var kegiatan = kegiatans.find(function(s){
+                        return s.id === kegiatanId;
                     });
-                    callback(customer ? customer.customer : '');
+                    callback(kegiatan ? kegiatan.kegiatan : '');
                 });
             }
         }

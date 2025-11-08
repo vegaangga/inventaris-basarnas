@@ -46,17 +46,17 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Customer</label>
-                  <select class="form-control" name="customer_id" id="customer_id">
-                    @foreach ($customers as $customer)
-                        @if (old('customer_id') == $customer->id)
-                          <option value="{{ $customer->id }}" selected>{{ $customer->customer}}</option>
+                  <label>Kegiatan</label>
+                  <select class="form-control" name="kegiatan_id" id="kegiatan_id">
+                    @foreach ($kegiatans as $kegiatan)
+                        @if (old('kegiatan_id') == $kegiatan->id)
+                          <option value="{{ $kegiatan->id }}" selected>{{ $kegiatan->kegiatan}}</option>
                         @else
-                          <option value="{{ $customer->id }}">{{ $customer->customer}}</option>
+                          <option value="{{ $kegiatan->id }}">{{ $kegiatan->kegiatan}}</option>
                         @endif
                     @endforeach
                   </select>
-                  <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-customer_id"></div>
+                  <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-kegiatan_id"></div>
                 </div>
   
                 <div class="form-group">
@@ -67,6 +67,14 @@
                       <input type="text" class="form-control" name="satuan" id="satuan_id" disabled>
                     </div>
                     <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-jumlah_keluar"></div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Keterangan</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="keterangan" id="keterangan" min="0" style="width: 75%;">
+                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-keterangan"></div>
                   </div>
                 </div>
                 
@@ -81,7 +89,6 @@
       </div>
     </div>
   </div>
-</div>
 
 
 
