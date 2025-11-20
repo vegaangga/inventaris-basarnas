@@ -44,7 +44,7 @@
                 </p>
 
                 <!-- Quick search (opsional) -->
-                <form action="{{ url('/manual') }}" method="GET" class="mt-8 max-w-xl mx-auto">
+                <form action="{{ url('/article') }}" method="GET" class="mt-8 max-w-xl mx-auto">
                     <label class="sr-only" for="q">Cari peralatan</label>
                     <div class="flex rounded-2xl overflow-hidden ring-1 ring-white/20 bg-white/10 backdrop-blur">
                         <input id="q" name="q" type="search" placeholder="Cari: Ring Buoy, Life Jacket, dsb."
@@ -188,8 +188,8 @@
    <!-- Grid Cards -->
         <section class="max-w-7xl mx-auto px-6 py-8">
                 <div class="flex items-end justify-between mb-6">
-                    <h3 class="text-2xl font-semibold text-gray-900">Daftar Manual</h3>
-                    <p class="text-sm text-gray-500">Klik “Buka Manual” untuk melihat detail.</p>
+                    <h3 class="text-2xl font-semibold text-gray-900">Article Terbaru</h3>
+                    <p class="text-sm text-gray-500">Klik “Baca Manual” untuk melihat detail.</p>
                 </div>
             @if($articles->count())
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -206,7 +206,7 @@
                                 <div class="mt-4 flex items-center justify-between">
                                     <a href="{{ route('article.show', $a) }}"
                                        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-900 text-white hover:bg-gray-800">
-                                        Buka Manual
+                                        Baca Manual
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M12.293 5.293a1 1 0 011.414 0L18 9.586a2 2 0 010 2.828l-4.293 4.293a1 1 0 01-1.414-1.414L14.586 12H4a1 1 0 110-2h10.586l-2.293-2.293a1 1 0 010-1.414z"/></svg>
                                     </a>
                                     <a href="{{ route('article.show', $a) }}#struktur"
@@ -215,10 +215,6 @@
                             </div>
                         </article>
                     @endforeach
-                </div>
-
-                <div class="mt-8">
-                    {{ $articles->onEachSide(1)->links() }}
                 </div>
             @else
                 <div class="text-center text-gray-500 py-16">

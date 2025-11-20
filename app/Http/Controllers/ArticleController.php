@@ -16,18 +16,27 @@ class ArticleController extends Controller
 
     // Publik: index + show
     public function index(Request $request) {
-        $q = $request->get('q');
-        $barangCount = Barang::count();
-        $stokBarangs = Barang::select('nama_barang','stok','stok_minimum','satuan_id')
-        ->with('satuan:id,satuan')
-        ->orderBy('nama_barang')
-        ->paginate(5)                 // <= tampil 12 per halaman
-        ->withQueryString();
+            $q = $request->get('q');
 
-        $articles = Articles::when($q, fn($w)=>$w->where('name','like',"%$q%"))
-            ->orderBy('name')->paginate(6)->withQueryString();
-        return view('article.index', compact('articles','q', 'barangCount', 'stokBarangs'));
-    }
+            $barangCount = Barang::count();
+
+            $stokBarangs = Barang::select('nama_barang','stok','stok_minimum','satuan_id')
+                ->with('satuan:id,satuan')
+                ->orderBy('nama_barang')
+                ->paginate(5)
+                ->withQueryString();
+
+            // 3 artikel terbaru saja untuk beranda
+            $articles = Articles::when($q, function ($w) use ($q) {
+                    $w->where('name', 'like', "%{$q}%");
+                })
+                ->latest()      // sama dengan orderBy('created_at','desc')
+                ->take(3)       // atau ->limit(3)
+                ->get();
+
+            return view('article.index', compact('articles','q', 'barangCount', 'stokBarangs'));
+        }
+
 
     public function list(Request $request) {
         $q = $request->get('q');

@@ -14,9 +14,6 @@
                 <div class="flex items-center gap-2">
                     <a href="{{ route('article.index') }}" class="px-3 py-1.5 rounded-lg border text-sm text-gray-700 hover:bg-gray-50">← Kembali</a>
                     <button onclick="window.print()" class="px-3 py-1.5 rounded-lg bg-orange-600 text-white text-sm hover:bg-orange-700">Print</button>
-                    @auth
-                        <a href="{{ route('article.edit',$article) }}" class="px-3 py-1.5 rounded-lg border text-sm text-gray-700 hover:bg-gray-50">Edit</a>
-                    @endauth
                 </div>
             </div>
         </header>
@@ -127,7 +124,7 @@
 
                     <!-- CTA bawah -->
                     <div class="flex items-center justify-between">
-                        <a href="{{ route('article.index') }}" class="inline-flex items-center gap-2 text-gray-700 hover:text-gray-900">
+                        <a href="{{ route('article.list') }}" class="inline-flex items-center gap-2 text-gray-700 hover:text-gray-900">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M7.707 14.707a1 1 0 01-1.414 0L1.586 10l4.707-4.707a1 1 0 011.414 1.414L4.414 9H18a1 1 0 110 2H4.414l3.293 3.293a1 1 0 010 1.414z"/></svg>
                             Kembali ke daftar
                         </a>

@@ -24,13 +24,13 @@
         <main class="flex-1">
             <!-- Toolbar -->
             <section class="max-w-7xl mx-auto px-6 pt-6">
-                <form method="GET" action="{{ route('article.index') }}" class="flex items-center gap-2">
+                <form method="GET" action="{{ route('article.list') }}" class="flex items-center gap-2">
                     <input type="search" name="q" value="{{ $q }}"
                            placeholder="Cari: Ring Buoy, Life Jacket, ..."
                            class="w-full sm:w-96 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500">
                     <button class="px-4 py-2 rounded-xl bg-orange-600 text-white hover:bg-orange-700">Cari</button>
                     @if($q)
-                        <a href="{{ route('article.index') }}" class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900">Reset</a>
+                        <a href="{{ route('article.list') }}" class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900">Reset</a>
                     @endif
                 </form>
             </section>
@@ -52,7 +52,7 @@
                                     <div class="mt-4 flex items-center justify-between">
                                         <a href="{{ route('article.show', $a) }}"
                                            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-900 text-white hover:bg-gray-800">
-                                            Buka Manual
+                                            Baca Manual
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M12.293 5.293a1 1 0 011.414 0L18 9.586a2 2 0 010 2.828l-4.293 4.293a1 1 0 01-1.414-1.414L14.586 12H4a1 1 0 110-2h10.586l-2.293-2.293a1 1 0 010-1.414z"/></svg>
                                         </a>
                                         <a href="{{ route('article.show', $a) }}#struktur"
