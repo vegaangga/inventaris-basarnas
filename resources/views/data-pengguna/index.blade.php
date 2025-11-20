@@ -23,6 +23,7 @@
                                     <th>No</th>
                                     <th>Nama</th>
                                     <th>Email</th>
+                                    <th>NIP</th>
                                     <th>Role</th>
                                     <th>Opsi</th>
                                 </tr>
@@ -58,6 +59,7 @@
                             <td>${counter++}</td>
                             <td>${value.name}</td>
                             <td>${value.email}</td>
+                            <td>${value.nip}</td>
                             <td>${value.role.role}</td>
                             <td>
                                 <a href="javascript:void(0)" id="button_edit_pengguna" data-id="${value.id}" class="btn btn-icon btn-warning btn-lg mb-2"><i class="far fa-edit"></i> </a>
@@ -83,6 +85,7 @@
 
             let name = $('#name').val();
             let email = $('#email').val();
+            let nip = $('#nip').val();
             let password = $('#password').val();
             let role_id = $('#role_id').val();
             let token = $("meta[name='csrf-token']").attr("content");
@@ -90,6 +93,7 @@
             let formData = new FormData();
             formData.append('name', name);
             formData.append('email', email);
+            formData.append('nip', nip);
             formData.append('password', password);
             formData.append('role_id', role_id);
             formData.append('_token', token);
@@ -129,6 +133,7 @@
                                 <td>${counter++}</td>
                                 <td>${value.name}</td>
                                 <td>${value.email}</td>
+                                <td>${value.nip}</td>
                                 <td>${role}</td>
                                 <td>
                                     <a href="javascript:void(0)" id="button_edit_pengguna" data-id="${value.id}" class="btn btn-icon btn-warning btn-lg mb-2"><i class="far fa-edit"></i> </a>
@@ -217,6 +222,7 @@
                     $('#pengguna_id').val(response.data.id);
                     $('#edit_name').val(response.data.name);
                     $('#edit_email').val(response.data.email);
+                    $('#edit_nip').val(response.data.nip);
                     $('#edit_password').val(response.data.password);
                     $('#edit_role_id').val(response.data.role_id);
 
@@ -232,6 +238,7 @@
             let pengguna_id = $('#pengguna_id').val();
             let name = $('#edit_name').val();
             let email = $('#edit_email').val();
+            let nip = $('#edit_nip').val();
             let password = $('#edit_password').val();
             let role_id = $('#edit_role_id').val();
             let token = $("meta[name='csrf-token']").attr("content");
@@ -241,6 +248,7 @@
             let formData = new FormData();
             formData.append('name', name);
             formData.append('email', email);
+            formData.append('nip', nip);
             formData.append('role_id', role_id);
             formData.append('_token', token);
             formData.append('_method', 'PUT');
@@ -285,6 +293,7 @@
                                     <td>${counter++}</td>
                                     <td>${value.name}</td>
                                     <td>${value.email}</td>
+                                     <td>${value.nip}</td>
                                     <td>${role}</td>
                                     <td>
                                         <a href="javascript:void(0)" id="button_edit_pengguna" data-id="${value.id}" class="btn btn-icon btn-warning btn-lg mb-2"><i class="far fa-edit"></i> </a>
@@ -399,6 +408,7 @@
                                             <td>${counter++}</td>
                                             <td>${value.name}</td>
                                             <td>${value.email}</td>
+                                             <td>${value.nip}</td>
                                             <td>${role}</td>
                                             <td>
                                                 <a href="javascript:void(0)" id="button_edit_pengguna" data-id="${value.id}" class="btn btn-icon btn-warning btn-lg mb-2"><i class="far fa-edit"></i> </a>

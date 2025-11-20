@@ -22,6 +22,11 @@
                 <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-email"></div>
             </div>
             <div class="form-group">
+                <label>NIP</label>
+                <input type="text" class="form-control" name="nip" id="edit_nip" placeholder="kosongkan jika tidak memiliki nip">
+                <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nip"></div>
+            </div>
+            <div class="form-group">
                 <label>Password</label>
                 <input type="password" class="form-control" name="password" id="edit_password" placeholder="Kosongkan jika password tidak diubah">
                 <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-password"></div>

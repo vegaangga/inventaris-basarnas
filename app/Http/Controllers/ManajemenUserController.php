@@ -51,13 +51,15 @@ class ManajemenUserController extends Controller
             'name'      => 'required',
             'email'     => 'required',
             'password'  => 'required|min:4',
-            'role_id'   => 'required'
+            'role_id'   => 'required',
+            'nip'       => 'nullable|unique:users,nip', // <--- tambahkan ini
         ], [
             'name.required'     => 'Form Nama Wajib Di isi !',
             'email.required'    => 'Form Email Wajib Di isi !',
             'password.required' => 'Form Password Wajib Di isi !',
             'password.min'      => 'Password Minimal 4 Huruf/Angka/Karakter !',
             'role_id.required'  => 'Tentukan Role/Hak Akses !',
+            'nip.unique'        => 'NIP sudah digunakan oleh pengguna lain!',
         ]);
 
         if ($validator->fails()) {
@@ -67,6 +69,7 @@ class ManajemenUserController extends Controller
         $pengguna = User::create([
             'name'      => $request->name,
             'email'     => $request->email,
+            'nip'       => $request->nip,
             'password'  => Hash::make($request->password),
             'role_id'   => $request->role_id
         ]);
@@ -109,11 +112,13 @@ class ManajemenUserController extends Controller
         $validator = Validator::make($request->all(), [
             'name'      => 'required',
             'email'     => 'required',
-            'role_id'   => 'required'
+            'role_id'   => 'required',
+            'nip'       => 'nullable|unique:users,nip,' . $id,
         ], [
             'name.required'     => 'Form Nama Wajib Di isi !',
             'email.required'    => 'Form Email Wajib Di isi !',
             'role_id.required'  => 'Tentukan Role/Hak Akses !',
+            'nip.unique'        => 'NIP sudah digunakan oleh pengguna lain!',
         ]);
 
         if ($validator->fails()) {
@@ -123,6 +128,7 @@ class ManajemenUserController extends Controller
         $userData = [
             'name'      => $request->name,
             'email'     => $request->email,
+            'nip'       => $request->nip,
             'role_id'   => $request->role_id
         ];
 
