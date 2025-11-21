@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\ArticleController;
-use App\Models\Supplier;
+use App\Models\Kegiatan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\BarangController;
@@ -18,6 +18,7 @@ use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LaporanBarangKeluarController;
 use App\Http\Controllers\LaporanBarangMasukController;
 use App\Http\Controllers\LaporanStokController;
+use App\Http\Controllers\ManajemenArticleController;
 use App\Http\Controllers\ManajemenUserController;
 use App\Http\Controllers\UbahPasswordController;
 use App\Models\BarangKeluar;
@@ -35,7 +36,7 @@ use App\Models\BarangMasuk;
 */
 
 // Route::get('/welcome', function () {
-//     // return view('home.landing', compact('suppliers'));
+//     // return view('home.landing', compact('kegiatans'));
 //     return view('home.landing');
 // });
 Route::get('/beranda', [ArticleController::class,'index'])->name('article.index');
@@ -60,7 +61,7 @@ Route::middleware('auth')->group(function () {
         
     });
 
-    Route::group(['middleware' => 'checkRole:kepala gudang,superadmin,admin gudang'], function(){
+    Route::group(['middleware' => 'checkRole:kepala gudang,superadmin,admin gudang,staff'], function(){
         Route::resource('/dashboard', DashboardController::class);
         Route::get('/', [DashboardController::class, 'index']);
         
@@ -71,7 +72,7 @@ Route::middleware('auth')->group(function () {
        
         Route::get('/laporan-barang-masuk/get-data', [LaporanBarangMasukController::class, 'getData']);
         Route::get('/laporan-barang-masuk/print-barang-masuk', [LaporanBarangMasukController::class, 'printBarangMasuk']);
-        Route::get('/api/supplier/', [LaporanBarangMasukController::class, 'getSupplier']);
+        Route::get('/api/kegiatan/', [LaporanBarangMasukController::class, 'getKegiatan']);
         Route::resource('/laporan-barang-masuk', LaporanBarangMasukController::class);
     
         Route::get('/laporan-barang-keluar/get-data', [LaporanBarangKeluarController::class, 'getData']);
@@ -84,7 +85,7 @@ Route::middleware('auth')->group(function () {
     });
 
 
-    Route::group(['middleware' => 'checkRole:superadmin,admin gudang'], function(){
+    Route::group(['middleware' => 'checkRole:superadmin,admin gudang,staff'], function(){
         Route::get('/barang/get-data', [BarangController::class, 'getDataBarang']);
         Route::resource('/barang', BarangController::class);
     
@@ -94,8 +95,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/satuan-barang/get-data', [SatuanController::class, 'getDataSatuanBarang']);
         Route::resource('/satuan-barang', SatuanController::class);
     
-        // Route::get('/kegiatan/get-data', [SupplierController::class, 'getDataSupplier']);
-        // Route::resource('/kegiatan', SupplierController::class);
+        // Route::get('/kegiatan/get-data', [KegiatanController::class, 'getDataKegiatan']);
+        // Route::resource('/kegiatan', KegiatanController::class);
 
         Route::get('/kegiatan/get-data', [KegiatanController::class, 'getDataKegiatan']);
         Route::resource('/kegiatan', KegiatanController::class);
@@ -112,6 +113,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/barang-keluar/get-data', [BarangKeluarController::class, 'getDataBarangKeluar']);
         Route::get('/api/satuan/', [BarangKeluarController::class, 'getSatuan']);
         Route::resource('/barang-keluar', BarangKeluarController::class);
+    });
+
+    Route::group(['middleware' => 'checkRole:superadmin,kepala gudang,admin gudang'], function(){
+        Route::get('/manajemen-article/get-data', [ManajemenArticleController::class, 'getData'])
+        ->name('manajemen-article.get-data');
+        Route::resource('/manajemen-article', ManajemenArticleController::class);
     });
 
 

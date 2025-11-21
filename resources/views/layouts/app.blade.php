@@ -102,6 +102,19 @@
           </div>
 
           <ul class="sidebar-menu"> 
+             @if (auth()->user()->role->role === 'staff')
+              <li class="sidebar-item">
+                <a class="nav-link {{ Request::is('/') || Request::is('dashboard') ? 'active' : '' }}" href="/">
+                  <i class="fas fa-fire"></i> <span class="align-middle">Dashboard</span>
+                </a>
+              </li>
+  
+              <li class="menu-header">TRANSAKSI</li>
+              <li><a class="nav-link {{ Request::is('barang-masuk') ? 'active' : '' }}" href="barang-masuk"><i class="fa fa-solid fa-arrow-right"></i><span>Barang Masuk</span></a></li>
+              <li><a class="nav-link {{ Request::is('barang-keluar') ? 'active' : '' }}" href="barang-keluar"><i class="fa fa-sharp fa-solid fa-arrow-left"></i> <span>Barang Keluar</span></a></li>
+            
+            @endif
+
             @if (auth()->user()->role->role === 'kepala gudang')
               <li class="sidebar-item">
                 <a class="nav-link {{ Request::is('/') || Request::is('dashboard') ? 'active' : '' }}" href="/">
@@ -161,6 +174,7 @@
               <li><a class="nav-link {{ Request::is('aktivitas-user') ? 'active' : '' }}" href="aktivitas-user"><i class="fa fa-solid fa-list"></i><span>Aktivitas User</span></a></li>
 
               <li class="menu-header">MANAJEMEN ARTIKEL</li>
+              <li><a class="nav-link {{ Request::is('manjemen-article') ? 'active' : '' }}" href="manajemen-article"><i class="fa fa-solid fa-list"></i><span>Manajemen Artikel</span></a></li>
             @endif
             
             @if (auth()->user()->role->role === 'admin gudang')

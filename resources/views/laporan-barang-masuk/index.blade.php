@@ -44,7 +44,7 @@
                                 <th>Tanggal Masuk</th>
                                 <th>Nama Barang</th>
                                 <th>Jumlah Masuk</th>
-                                <th>Supplier</th>
+                                <th>Kegiatan</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -58,79 +58,99 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-    var table = $('#table_id').DataTable({ paging: true }); // Simpan objek DataTable dalam variabel
+$(document).ready(function() {
+    var table = $('#table_id').DataTable({ paging: true });
 
-    loadData(); // Panggil fungsi loadData saat halaman dimuat
+    // CACHE untuk kegiatan
+    var kegiatanMap = {};
+    var kegiatanPromise = null;
 
-    $('#filter_form').submit(function(event) {
-        event.preventDefault();
-        loadData(); // Panggil fungsi loadData saat tombol filter ditekan
-    });
+    // Ambil list kegiatan sekali saja
+    function loadKegiatan() {
+        if (kegiatanPromise) return kegiatanPromise; // kalau sudah pernah request, pakai yang sama
 
-    $('#refresh_btn').on('click', function() {
-        refreshTable();
-    });
+        kegiatanPromise = $.getJSON('{{ url('api/kegiatan') }}')
+            .done(function(kegiatans) {
+                kegiatanMap = {};
+                kegiatans.forEach(function(k) {
+                    // simpan di map: { id: nama_kegiatan }
+                    kegiatanMap[k.id] = k.kegiatan;
+                });
+            })
+            .fail(function(xhr, status, error) {
+                console.error('Gagal load kegiatan:', error);
+            });
 
-    // Fungsi load data berdasarkan range tanggal_mulai dan tanggal_selesai
+        return kegiatanPromise;
+    }
+
+    function getKegiatanNameFromCache(kegiatanId) {
+        return kegiatanMap[kegiatanId] || '';
+    }
+
+    // --- Load data barang masuk ---
     function loadData() {
-        var tanggalMulai = $('#tanggal_mulai').val();
+        var tanggalMulai   = $('#tanggal_mulai').val();
         var tanggalSelesai = $('#tanggal_selesai').val();
 
-        $.ajax({
-            url: '/laporan-barang-masuk/get-data',
-            type: 'GET',
-            dataType: 'json',
-            data: {
-                tanggal_mulai: tanggalMulai,
-                tanggal_selesai: tanggalSelesai
-            },
-            success: function(response) {
-                table.clear().draw(); // Hapus data yang sudah ada dari DataTable sebelum menambahkan data yang baru
+        // Pastikan kegiatan sudah di-load, baru load laporan
+        $.when(loadKegiatan()).done(function () {
+            $.ajax({
+                url: '/laporan-barang-masuk/get-data',
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    tanggal_mulai: tanggalMulai,
+                    tanggal_selesai: tanggalSelesai
+                },
+                success: function(response) {
+                    table.clear(); // bersihkan isi tabel
 
-                if (response.length > 0) {
-                    $.each(response, function(index, item) {
-                        getSupplierName(item.supplier_id, function(supplier) {
+                    if (response.length > 0) {
+                        $.each(response, function(index, item) {
+                            var kegiatanName = getKegiatanNameFromCache(item.kegiatan_id);
+
                             var row = [
                                 (index + 1),
                                 item.kode_transaksi,
                                 item.tanggal_masuk,
                                 item.nama_barang,
                                 item.jumlah_masuk,
-                                supplier
+                                kegiatanName,
+                                item.keterangan
                             ];
-                            table.row.add(row).draw(false); // Tambahkan data yang baru ke DataTable
+                            table.row.add(row);
                         });
-                    });
-                } else {
-                    var emptyRow = ['','Tidak ada data yang tersedia.', '', '', '', '', ''];
-                    table.row.add(emptyRow).draw(false); // Tambahkan baris kosong ke DataTable
+                        table.draw(false);
+                    } else {
+                        var emptyRow = ['','Tidak ada data yang tersedia.', '', '', '', '', ''];
+                        table.row.add(emptyRow).draw(false);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
                 }
-            },
-            error: function(xhr, status, error) {
-                console.log(error);
-            }
-        });
-
-        function getSupplierName(supplierId, callback) {
-            $.getJSON('{{ url('api/kegiatan') }}', function(suppliers) {
-                var supplier = suppliers.find(function(s) {
-                    return s.id === supplierId;
-                });
-                callback(supplier ? supplier.supplier : '');
             });
-        }
+        });
     }
 
-    // Fungsi Refresh Tabel
-    function refreshTable() {
+    // --- Event handler ---
+    // pertama kali halaman dibuka
+    loadData();
+
+    $('#filter_form').submit(function(event) {
+        event.preventDefault();
+        loadData();
+    });
+
+    $('#refresh_btn').on('click', function() {
         $('#filter_form')[0].reset();
         loadData();
-    }
+    });
 
     // Print barang masuk
     $('#print-barang-masuk').on('click', function() {
-        var tanggalMulai = $('#tanggal_mulai').val();
+        var tanggalMulai   = $('#tanggal_mulai').val();
         var tanggalSelesai = $('#tanggal_selesai').val();
 
         var url = '/laporan-barang-masuk/print-barang-masuk';
@@ -142,6 +162,5 @@
         window.location.href = url;
     });
 });
-
 </script>
 @endsection

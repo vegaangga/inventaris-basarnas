@@ -45,6 +45,7 @@
                                 <th>Nama Barang</th>
                                 <th>Jumlah Masuk</th>
                                 <th>Kegiatan</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
                         <tbody id="tabel-laporan-barang-keluar">
@@ -59,8 +60,87 @@
 <!-- Script Get Data -->
 <script>
     $(document).ready(function() {
-        var table = $('#table_id').DataTable({ paging: true});
+        var table = $('#table_id').DataTable({ paging: true });
 
+        // CACHE untuk kegiatan
+        var kegiatanMap = {};
+        var kegiatanPromise = null;
+
+        // Ambil list kegiatan sekali saja
+        function loadKegiatan() {
+            if (kegiatanPromise) return kegiatanPromise; // kalau sudah pernah request, pakai yang sama
+
+            kegiatanPromise = $.getJSON('{{ url('api/kegiatan') }}')
+                .done(function(kegiatans) {
+                    kegiatanMap = {};
+                    kegiatans.forEach(function(k) {
+                        kegiatanMap[k.id] = k.kegiatan; // { id: nama_kegiatan }
+                    });
+                })
+                .fail(function(xhr, status, error) {
+                    console.error('Gagal load kegiatan:', error);
+                });
+
+            return kegiatanPromise;
+        }
+
+        function getKegiatanNameFromCache(kegiatanId) {
+            return kegiatanMap[kegiatanId] || '';
+        }
+
+        // Fungsi load data berdasarkan range tanggal_mulai dan tanggal_selesai
+        function loadData() {
+            var tanggalMulai   = $('#tanggal_mulai').val();
+            var tanggalSelesai = $('#tanggal_selesai').val();
+
+            // Pastikan kegiatan sudah diambil dulu
+            $.when(loadKegiatan()).done(function () {
+                $.ajax({
+                    url: '/laporan-barang-keluar/get-data',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        tanggal_mulai: tanggalMulai,
+                        tanggal_selesai: tanggalSelesai
+                    },
+                    success: function(response) {
+                        table.clear(); // bersihkan isi tabel dulu
+
+                        if (response.length > 0) {
+                            $.each(response, function(index, item) {
+                                var kegiatanName = getKegiatanNameFromCache(item.kegiatan_id);
+
+                                var row = [
+                                    (index + 1),
+                                    item.kode_transaksi,
+                                    item.tanggal_keluar,
+                                    item.nama_barang,
+                                    item.jumlah_keluar,
+                                    kegiatanName,
+                                    item.keterangan
+                                ];
+                                table.row.add(row);
+                            });
+                            table.draw(false);
+                        } else {
+                            var emptyRow = ['','Tidak ada data yang tersedia.', '', '', '', ''];
+                            table.row.add(emptyRow).draw(false);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            });
+        }
+
+        // Fungsi Refresh Tabel
+        function refreshTable(){
+            $('#filter_form')[0].reset();
+            loadData();
+        }
+
+        // ==== Event binding ====
         loadData(); // Panggil fungsi loadData saat halaman dimuat
 
         $('#filter_form').submit(function(event) {
@@ -72,69 +152,14 @@
             refreshTable();
         });
 
-        //Fungsi load data berdasarkan range tanggal_mulai dan tanggal_selesai
-        function loadData() {
-            var tanggalMulai = $('#tanggal_mulai').val();
-            var tanggalSelesai = $('#tanggal_selesai').val();
-            
-            $.ajax({
-                url: '/laporan-barang-keluar/get-data',
-                type: 'GET',
-                dataType: 'json',
-                data: {
-                    tanggal_mulai: tanggalMulai,
-                    tanggal_selesai: tanggalSelesai
-                },
-                success: function(response) {
-                    table.clear().draw();
-
-                    if (response.length > 0) {
-                        $.each(response, function(index, item) {
-                            getKegiatanName(item.kegiatan_id, function(kegiatan){
-                                var row = [
-                                    (index + 1),
-                                    item.kode_transaksi,
-                                    item.tanggal_keluar,
-                                    item.nama_barang,
-                                    item.jumlah_keluar,
-                                    kegiatan
-                                ];
-                               table.row.add(row).draw(false);
-                            });
-                        });
-                    } else {
-                        var emptyRow = ['','Tidak ada data yang tersedia.', '', '', '', ''];
-                        table.row.add(emptyRow).draw(false); // Tambahkan baris kosong ke DataTable
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.log(error);
-                }
-            });
-            function getKegiatanName(kegiatanId, callback){
-                $.getJSON('{{ url('api/kegiatan') }}', function(kegiatans){
-                    var kegiatan = kegiatans.find(function(s){
-                        return s.id === kegiatanId;
-                    });
-                    callback(kegiatan ? kegiatan.kegiatan : '');
-                });
-            }
-        }
-
-        //Fungsi Refresh Tabel
-        function refreshTable(){
-            $('#filter_form')[0].reset();
-            loadData();
-        }
-
-        //Print barang keluar
+        // Print barang keluar
         $('#print-barang-keluar').on('click', function(){
-            var tanggalMulai    = $('#tanggal_mulai').val();
-            var tanggalSelesai  = $('#tanggal_selesai').val();
-            
+            var tanggalMulai   = $('#tanggal_mulai').val();
+            var tanggalSelesai = $('#tanggal_selesai').val();
+
             var url = '/laporan-barang-keluar/print-barang-keluar';
 
-            if(tanggalMulai && tanggalSelesai){
+            if (tanggalMulai && tanggalSelesai){
                 url += '?tanggal_mulai=' + tanggalMulai + '&tanggal_selesai=' + tanggalSelesai;
             }
 
@@ -143,7 +168,6 @@
 
     });
 </script>
-
 
 
 @endsection

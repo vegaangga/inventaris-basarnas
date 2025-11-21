@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Dompdf\Dompdf;
-use App\Models\Supplier;
+use App\Models\Kegiatan;
 use App\Models\BarangMasuk;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -71,11 +71,11 @@ class LaporanBarangMasukController extends Controller
     }
     
     /**
-     * Get Supplier
+     * Get Kegiatan
      */
-    public function getSupplier()
+    public function getKegiatan()
     {
-        $supplier = Supplier::all();
+        $supplier = Kegiatan::all();
         return response()->json($supplier);
     }
 
